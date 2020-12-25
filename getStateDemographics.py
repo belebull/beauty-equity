@@ -4,6 +4,8 @@ import requests
 import constants as cs
 from decouple import config
 
+# get demographics data for each state using the census api
+
 
 def get_raw_data(state_code):
     # set the base url
@@ -19,6 +21,8 @@ def get_raw_data(state_code):
     data = pd.DataFrame(zip_code_data[1:], columns=zip_code_data[0])
 
     return data
+
+# remove anything not related to race and income
 
 
 def clean_data(data):
@@ -46,16 +50,20 @@ def clean_data(data):
 
     return data
 
+# generate demographics statistics for each state
+
 
 def main():
-
+    # grab the FIPS code for each state and get demographics using CENSUS API
     for state in cs.STATE_CONVERTER.index:
-        # set the state code for Illinois
         state_code = cs.STATE_CONVERTER.loc[state]['state_id']
+
+        # get all demographics data
         raw_data = get_raw_data(state_code)
+        # retain only racial demographics and income data
         data = clean_data(raw_data)
 
-        # generate data file for the state
+        # convert each pandas into a csv file
         data_file_path = 'state_data/{state}.csv'.format(state=state)
         data.to_csv(data_file_path, index=True, header=True)
         print('Just finished state: ', state)
