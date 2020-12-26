@@ -24,6 +24,9 @@ CENSUS_CODES = {'B01003_001E': 'total_pop',
 ETHNICITY_PAIRS = [('white_nh', 'white_h'), ('black_nh', 'black_h'), ('native_nh', 'native_h'), ('asian_nh', 'asian_h'),
                    ('other_nh', 'other_h'), ('biracial_nh', 'biracial_h'), ('multiracial_nh', 'multiracial_h')]
 
+RACES = ['white', 'black', 'asian', 'native',
+         'biracial', 'multiracial', 'other']
+
 # generate state converter dictionary
 STATE_CONVERTER = pd.read_csv('state_converter.csv')
 STATE_CONVERTER = STATE_CONVERTER.set_index('state_abbr')
